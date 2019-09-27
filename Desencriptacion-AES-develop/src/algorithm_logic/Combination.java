@@ -10,6 +10,26 @@ public class Combination {
 
     public Combination() {
     }
+    
+    public double calculate_success_percentage(int tries, int hits) {
+    	int misses = tries-hits;
+    	double percentage = hits-(hits*(misses/tries));
+    	return percentage;
+    }
+    public boolean amount_is_satisfactory(int max_amount) {
+    	if((this.getGroup_letters().size()+this.getGroup_numbers().size()) <= max_amount) {
+    		return true;
+    	}
+    	else {
+    		return false;
+    	}
+    }
+    
+    public Combination obtain_common_elements(Combination second_combination) {
+    	Combination temp_subgroup = new Combination(this.getGroup_letters(), this.getGroup_numbers());
+    	temp_subgroup.getGroup_letters().retainAll(second_combination.getGroup_letters());
+    	return temp_subgroup;
+    }
 
     //Carga los valores iniciales de numeros y letras
     public void init_values() {

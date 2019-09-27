@@ -35,6 +35,25 @@ public class combination {
     		System.out.print(current_structure.group_numbers.get(i)+"\t");
     	}
     }
+    
+    /*public int test_combination_matches(double match_percentage, combination tested_group) {
+    	int matches_for_test = 0;
+    	matches_for_test = (int) Math.round((tested_group.group_letters.size()+tested_group.group_numbers.size())*match_percentage);
+    	for(int curr_match = 0; curr_match < matches_for_test; curr_match++) {
+    		Random random_index = new Random();
+    		int rand_letter_index = random_index.nextInt(tested_group.group_letters.size());
+    		int rand_number_index = random_index.nextInt(tested_group.group_numbers.size());
+    		if(key[pos of letter] == tested_group.group_letters.get(rand_letter_index) && key[pos of number] == tested_group.group_numbers.get(rand_number_index)) {
+    			//match succesful
+    			succesful_matches+=1;
+    			//must affect success percentage of the group
+    		}
+    		else
+    			//unsuccessful match
+    			//must affect success percentage of the group
+    	}
+    	return success_percentage of test;
+    }*/
 
     public double getSuccess_percentage() {
         return success_percentage;

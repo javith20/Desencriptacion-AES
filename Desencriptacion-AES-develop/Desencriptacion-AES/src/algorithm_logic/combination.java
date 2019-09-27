@@ -1,15 +1,15 @@
 package algorithm_logic;
 import java.util.*;
 
-public class combination {
+public class Combination {
 	double success_percentage = 0.0d;
     List<String> group_letters = new ArrayList<String>();
     List<String> group_numbers = new ArrayList<String>();
 
-    public combination() {
+    public Combination() {
     }
 
-    public combination(List<String> _group_letters, List<String> _group_numbers) {
+    public Combination(List<String> _group_letters, List<String> _group_numbers) {
         this.group_letters = _group_letters;
         this.group_numbers = _group_numbers;
     }

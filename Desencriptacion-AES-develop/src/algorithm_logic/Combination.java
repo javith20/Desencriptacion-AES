@@ -1,14 +1,38 @@
 package algorithm_logic;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class Combination {
 
     private double success_percentage = 0.0d;
     private ArrayList<String> group_letters = new ArrayList<String>();
     private ArrayList<String> group_numbers = new ArrayList<String>();
-
+    private String missing_key ="";
     public Combination() {
+    }
+    
+    public double calculate_success_percentage(int tries, int hits) {
+    	int misses = tries-hits;
+    	double percentage = hits-(hits*(misses/tries));
+    	return percentage;
+    }
+    public boolean amount_is_satisfactory(int max_amount) {
+    	if((this.getGroup_letters().size()+this.getGroup_numbers().size()) <= max_amount) {
+    		return true;
+    	}
+    	else {
+    		return false;
+    	}
+    }
+    
+    public Combination obtain_common_elements(Combination second_combination) {
+    	Combination temp_subgroup = new Combination(this.getGroup_letters(), this.getGroup_numbers());
+    	temp_subgroup.getGroup_letters().retainAll(second_combination.getGroup_letters());
+    	temp_subgroup.getGroup_numbers().retainAll(second_combination.getGroup_numbers());
+    	temp_subgroup.setGroup_letters((ArrayList<String>)group_letters.stream().distinct().collect(Collectors.toList()));
+    	temp_subgroup.setGroup_numbers((ArrayList<String>)group_numbers.stream().distinct().collect(Collectors.toList()));
+    	return temp_subgroup;
     }
 
     //Carga los valores iniciales de numeros y letras
@@ -22,7 +46,7 @@ public class Combination {
             group_numbers.add(String.valueOf(value++));
         }
     }
-
+    
     public Combination(ArrayList<String> _group_letters, ArrayList<String> _group_numbers) {
         this.group_letters = _group_letters;
         this.group_numbers = _group_numbers;
@@ -46,9 +70,9 @@ public class Combination {
         final String txt_encrypted = "xZwM7BWIpSjYyGFr9rhpEa+cYVtACW7yQKmyN6OYSCv0ZEg9jWbc6lKzzCxRSSIvOvlimQZBMZOYnOwiA9yy3YU8zk4abFSItoW6Wj0ufQ0=";
         final String[] txt_key_incomplete = {"29dh120", "dk1", "3"};
         Random random_index = new Random();
-        int trys = (int) (this.getGroup_letters().size() * _percentage);
+        int trys = 0;
         int hits = 0;
-        while (trys > 0) {
+        while (trys < (int) (this.getGroup_letters().size() * _percentage)) {
             int letter_rand_index = random_index.nextInt(this.getGroup_letters().size() - 1);
             int numbers_rand_index = random_index.nextInt(this.getGroup_numbers().size() - 1);
             String posible_key = txt_key_incomplete[0] + this.getGroup_letters().get(letter_rand_index);
@@ -56,34 +80,41 @@ public class Combination {
             if (AES.decrypt(txt_encrypted, posible_key) != null) {
                 hits++;
             }
-            trys--;
+            trys++;
 
         }
+       
         this.success_percentage = hits;
     }
     public boolean validate_string(String _string){
         
-        //for(int index =0 ;index<_string.length();index++)
-          //  if(_string[0]<31)
-          return false;
+        for(int index =0 ;index<_string.length();index++) {
+        	int letter =(int)_string.charAt(index);
+        	 if(letter<32)
+        		 return false;
+        }
+          
+          return true;
     }
     public String brute_force() {
         final String txt_encrypted = "xZwM7BWIpSjYyGFr9rhpEa+cYVtACW7yQKmyN6OYSCv0ZEg9jWbc6lKzzCxRSSIvOvlimQZBMZOYnOwiA9yy3YU8zk4abFSItoW6Wj0ufQ0=";
         final String[] txt_key_incomplete = {"29dh120", "dk1", "3"};
         int trys=0;
+        
         for (String letter : this.group_letters) {
             for (String number : this.group_numbers) {
                 trys++;
                 String posible_key = txt_key_incomplete[0] + letter + txt_key_incomplete[1] + number + txt_key_incomplete[2];
                 String decry = AES.decrypt(txt_encrypted, posible_key);
-                System.out.println(letter+number);
                 if (decry != null) {
-                    System.out.println(trys);
-                    return decry;
+                	if(validate_string(decry)) {
+                		this.missing_key= letter+number;
+                		return "\nRespuesta final: "+decry+"\nCaracteres faltantes: "+missing_key;
+                	}
                 }
             }
         }
-        System.out.println(trys);
+       
         return null;
     }
 
@@ -137,9 +168,14 @@ public class Combination {
     }
 
     public void setGroup_letters(ArrayList<String> group_letters) {
-        this.group_letters = group_letters;
+        this.group_letters =  group_letters;
     }
 
+    public String getMissing_keys() {
+        return this.missing_key;
+    }
+
+    
     public ArrayList<String> getGroup_numbers() {
         return group_numbers;
     }

@@ -11,4 +11,5 @@ Uso de un algoritmo probabilistico para desencriptar una contrasena con sustituc
 8.b. Si la cantidad es mayor, dividir el grupo y volver a realizar los pasos de pruebas y descarte hasta obtener un subgrupo mutante cuya suma de elementos sea menor a 8.
 9.a. Cruzar los dedos y esperar que alguna de esas combinaciones sea exitosa. Una de las combinaciones es la correcta y se ha descifrado la llave. Por lo tanto, la prueba fue exitosa.
 9.b. Aceptar que en la vida no siempre se puede lograr lo que uno quiere y la combinacion correcta no esta en el subgrupo generado. La prueba no fue exitosa pero eso no evita que usted lo pueda ser en la vida. No hay que rendirse y hay que intentar de nuevo y mantener la esperanza de que la proxima si pegue. 
-10. Desencriptar el maldito texto.
+10. Desencriptar el texto.
+
